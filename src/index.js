@@ -6,18 +6,21 @@ import { NewApiService } from './js/getPhotoAPI';
 import shablonMarkup from './templates/photo-card.hbs';
 
 const searchFormEl = document.querySelector('#search-form');
-const galleryEl = document.querySelector('.gallery');
 const loadMoreBtnEl = document.querySelector('.load-more');
+const galleryEl = document.querySelector('.gallery');
+
+const newApiService = new NewApiService();
+
+let totalImg = 0;
 
 searchFormEl.addEventListener('submit', onSearch);
 loadMoreBtnEl.addEventListener('click', onLoadMore);
-
-const newApiService = new NewApiService();
 
 function onSearch(e) {
   e.preventDefault();
 
   newApiService.query = e.currentTarget.elements.searchQuery.value.trim();
+
   newApiService.resetPage();
 
   if (!newApiService.query) {
@@ -27,8 +30,7 @@ function onSearch(e) {
   newApiService
     .fetchPhoto()
     .then(({ totalHits, hits }) => {
-      if (totalHits === 0) {
-        loadMoreBtnEl.hidden = true;
+      if (hits.length === 0) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
@@ -36,12 +38,11 @@ function onSearch(e) {
 
       if (totalHits) {
         Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
+        loadMoreBtnEl.hidden = false;
       }
 
       clearShablonGallery();
       appendShablonMarkup({ hits });
-
-      loadMoreBtnEl.hidden = false;
     })
     .catch(error => console.log(error));
 }
@@ -49,8 +50,18 @@ function onSearch(e) {
 function onLoadMore() {
   newApiService
     .fetchPhoto()
-    .then(({ hits }) => {
+    .then(({ totalHits, hits }) => {
       appendShablonMarkup({ hits });
+
+      totalImg += hits.length;
+
+      if (totalHits === totalImg) {
+        loadMoreBtnEl.hidden = true;
+
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
     })
     .catch(error => console.log(error));
 }
@@ -63,7 +74,8 @@ function clearShablonGallery() {
   galleryEl.innerHTML = '';
 }
 
-let lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
+let lightBox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
+console.log(lightBox);
+lightBox.refresh();

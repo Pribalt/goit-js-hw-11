@@ -11,10 +11,10 @@ class NewApiService {
 
   async fetchPhoto() {
     console.log(this);
-
     const response = await axios.get(
-      `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&per_page=40&page=${this.page}&image_type=photo&orientation=horizontal&safesearch=true`
+      `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&per_page=100&page=${this.page}&image_type=photo&orientation=horizontal&safesearch=true`
     );
+
     this.page += 1;
 
     return response.data;
