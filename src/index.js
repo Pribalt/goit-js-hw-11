@@ -3,7 +3,7 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { NewApiService } from './js/getPhotoAPI';
-import shablonMarkup from './templates/photo-card.hbs';
+import { createMarkup } from './js/createMarkup';
 
 const searchFormEl = document.querySelector('#search-form');
 const loadMoreBtnEl = document.querySelector('.load-more');
@@ -15,6 +15,10 @@ let totalImg = 0;
 
 searchFormEl.addEventListener('submit', onSearch);
 loadMoreBtnEl.addEventListener('click', onLoadMore);
+
+let lightBox = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+});
 
 function onSearch(e) {
   e.preventDefault();
@@ -31,18 +35,18 @@ function onSearch(e) {
     .fetchPhoto()
     .then(({ totalHits, hits }) => {
       if (hits.length === 0) {
-        Notiflix.Notify.failure(
+        createMarkupGallery();
+
+        return Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
       }
 
-      if (totalHits) {
-        Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
-        loadMoreBtnEl.hidden = false;
-      }
+      Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
 
-      clearShablonGallery();
-      appendShablonMarkup({ hits });
+      appendShablonMarkup(hits);
+
+      enable();
     })
     .catch(error => console.log(error));
 }
@@ -51,12 +55,12 @@ function onLoadMore() {
   newApiService
     .fetchPhoto()
     .then(({ totalHits, hits }) => {
-      appendShablonMarkup({ hits });
+      appendShablonMarkup(hits);
 
       totalImg += hits.length;
 
       if (totalHits === totalImg) {
-        loadMoreBtnEl.hidden = true;
+        disable();
 
         Notiflix.Notify.info(
           "We're sorry, but you've reached the end of search results."
@@ -66,16 +70,19 @@ function onLoadMore() {
     .catch(error => console.log(error));
 }
 
-function appendShablonMarkup(hits) {
-  galleryEl.insertAdjacentHTML('beforeend', shablonMarkup(hits));
+function appendShablonMarkup(arr) {
+  galleryEl.insertAdjacentHTML('beforeend', createMarkup(arr));
+
+  lightBox.refresh();
 }
 
-function clearShablonGallery() {
+function createMarkupGallery() {
   galleryEl.innerHTML = '';
 }
 
-let lightBox = new SimpleLightbox('.gallery a', {
-  captionDelay: 250,
-});
-console.log(lightBox);
-lightBox.refresh();
+function enable() {
+  loadMoreBtnEl.hidden = false;
+}
+function disable() {
+  loadMoreBtnEl.hidden = true;
+}

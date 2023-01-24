@@ -10,13 +10,12 @@ class NewApiService {
   }
 
   async fetchPhoto() {
-    console.log(this);
     const response = await axios.get(
       `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&per_page=100&page=${this.page}&image_type=photo&orientation=horizontal&safesearch=true`
     );
 
     this.page += 1;
-
+    console.log(response.data);
     return response.data;
   }
 
@@ -34,3 +33,7 @@ class NewApiService {
 }
 
 export { NewApiService };
+
+// const { hits, totalHits } = response.data;
+
+// return { hits, totalHits };
