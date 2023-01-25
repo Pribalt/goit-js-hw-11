@@ -1,5 +1,4 @@
 function createMarkup(arr) {
-  console.log(arr);
   return arr
     .map(
       ({

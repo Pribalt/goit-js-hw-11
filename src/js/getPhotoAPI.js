@@ -7,15 +7,16 @@ class NewApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
+    this.per_page = 40;
   }
 
   async fetchPhoto() {
     const response = await axios.get(
-      `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&per_page=100&page=${this.page}&image_type=photo&orientation=horizontal&safesearch=true`
+      `${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&per_page=${this.per_page}&page=${this.page}&image_type=photo&orientation=horizontal&safesearch=true`
     );
 
     this.page += 1;
-    console.log(response.data);
+
     return response.data;
   }
 
@@ -33,7 +34,3 @@ class NewApiService {
 }
 
 export { NewApiService };
-
-// const { hits, totalHits } = response.data;
-
-// return { hits, totalHits };
