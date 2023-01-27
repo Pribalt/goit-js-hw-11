@@ -13,6 +13,19 @@ const guardEl = document.querySelector('.js-guard');
 
 const newApiService = new NewApiService();
 
+// ------------------------------- fixed header with navigation -------------------------------
+// console.log(
+//   document.querySelector('.js-page-header').getBoundingClientRect().height
+// );
+
+const { height: pageHeaderHeight } = document
+  .querySelector('.js-page-header')
+  .getBoundingClientRect();
+
+document.body.style.paddingTop = `${pageHeaderHeight}px`;
+searchFormEl.style.height = `${pageHeaderHeight}px`;
+// -------------------------------------------------------------------------------
+
 let lightBox = new SimpleLightbox('.gallery a', {
   captionDelay: 250,
 });
