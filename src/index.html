@@ -5,23 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homework 11</title>
+    <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
-    <form class="search-form" id="search-form">
-      <input
-        type="text"
-        name="searchQuery"
-        autocomplete="off"
-        placeholder="Search images..."
-      />
+    <section class="search-section">
+      <div class="search-container">
+        <form class="search-form" id="search-form">
+          <input
+            class="search-form__input"
+            type="text"
+            name="searchQuery"
+            autocomplete="off"
+            placeholder="Search images..."
+          />
 
-      <button type="submit">Search</button>
-    </form>
+          <button class="search-btn" type="submit">
+            <svg class="search-icon" width="18" height="18">
+              <use href="./images/search.svg#search"></use>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </section>
 
-    <div class="gallery"></div>
-    <div class="js-guard"></div>
+    <section class="gallery-section">
+      <div class="gallery-container">
+        <div class="gallery"></div>
+        <div class="js-guard"></div>
 
-    <button hidden type="button" class="load-more">Load more</button>
+        <button hidden type="button" class="load-more">Load more</button>
+      </div>
+    </section>
 
     <script src="index.js" type="module"></script>
   </body>

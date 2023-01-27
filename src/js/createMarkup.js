@@ -10,7 +10,7 @@ function createMarkup(arr) {
         comments,
         downloads,
       }) => {
-        return `<a href='${largeImageURL}'>
+        return `<a class='card-link' href='${largeImageURL}'>
       <div class='photo-card'>
       <img src=${webformatURL} alt='${tags}' loading='lazy' />
       <div class='info'>
@@ -31,7 +31,7 @@ function createMarkup(arr) {
   </a>`;
       }
     )
-    .join();
+    .join('');
 }
 
 export { createMarkup };

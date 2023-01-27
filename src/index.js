@@ -1,4 +1,4 @@
-import './css/styles.css';
+import './sass/index.scss';
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -20,22 +20,25 @@ let lightBox = new SimpleLightbox('.gallery a', {
 let totalImg = 0;
 
 searchFormEl.addEventListener('submit', onSearch);
-loadMoreBtnEl.addEventListener('click', fetchMarkup);
+// loadMoreBtnEl.addEventListener('click', fetchMarkup);
 
 function onSearch(e) {
   e.preventDefault();
 
-  clearMarkup();
+  newApiService.query = e.currentTarget.elements.searchQuery.value;
 
-  newApiService.query = e.currentTarget.elements.searchQuery.value.trim();
-
-  if (!newApiService.query) {
-    return;
+  if (!newApiService.query.trim()) {
+    console.log(newApiService.query);
+    return Notiflix.Notify.failure(
+      'The search field is empty. Please enter the value!'
+    );
   }
 
-  fetchMarkup();
+  clearMarkup();
 
   newApiService.resetPage();
+
+  fetchMarkup();
 }
 
 function fetchMarkup(params) {

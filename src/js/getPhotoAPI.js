@@ -16,7 +16,7 @@ class NewApiService {
     );
 
     this.page += 1;
-
+    console.log(response.data);
     return response.data;
   }
 

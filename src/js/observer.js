@@ -1,5 +1,4 @@
 import Notiflix from 'notiflix';
-import { smoothScrolling } from './smoothScrolling';
 import {
   newApiService,
   appendCreatMarkup,
@@ -18,7 +17,6 @@ let observer = new IntersectionObserver(onLoad, options);
 
 function onLoad(entries, observer) {
   entries.forEach(entry => {
-    console.log(entry);
     if (entry.isIntersecting) {
       newApiService
         .fetchPhoto()
@@ -26,8 +24,6 @@ function onLoad(entries, observer) {
           appendCreatMarkup(hits);
 
           disable();
-
-          smoothScrolling();
 
           if (totalHits === totalImg || totalImg >= 500) {
             observer.unobserve(guardEl);
