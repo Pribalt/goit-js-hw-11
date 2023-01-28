@@ -5,6 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { NewApiService } from './js/getPhotoAPI';
 import { createMarkup } from './js/createMarkup';
 import { observer } from './js/observer';
+import { smoothScrolling } from './js/smoothScrolling';
 
 const searchFormEl = document.querySelector('#search-form');
 const loadMoreBtnEl = document.querySelector('.load-more');
@@ -75,6 +76,10 @@ function fetchMarkup(params) {
       appendCreatMarkup(hits);
 
       observer.observe(guardEl);
+
+      if (newApiService.page === scroll) {
+        smoothScrolling();
+      }
 
       //  ------------------------Loadmore-----------------------
       // totalImg += hits.length;
