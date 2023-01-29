@@ -5,8 +5,8 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import { NewApiService } from './js/getPhotoAPI';
 import { createMarkup } from './js/createMarkup';
 import { observer } from './js/observer';
-import { smoothScrolling } from './js/smoothScrolling';
-// import { onGetScroll, onClickScroll } from './js/scrollUp';
+// import { smoothScrolling } from './js/smoothScrolling';
+import { onGetScroll, onClickScroll } from './js/scrollUp';
 
 const searchFormEl = document.querySelector('#search-form');
 const loadMoreBtnEl = document.querySelector('.load-more');
@@ -35,8 +35,8 @@ let lightBox = new SimpleLightbox('.gallery a', {
 let totalImg = 0;
 
 searchFormEl.addEventListener('submit', onSearch);
-document.addEventListener('scroll', smoothScrolling);
-// loadMoreBtnEl.addEventListener('click', fetchMarkup);
+// document.addEventListener('scroll', smoothScrolling);
+loadMoreBtnEl.addEventListener('click', fetchMarkup);
 
 function onSearch(e) {
   e.preventDefault();
@@ -79,9 +79,12 @@ function fetchMarkup(params) {
 
       observer.observe(guardEl);
 
-      if (newApiService.page === scroll) {
-        smoothScrolling();
-      }
+      // if (newApiService.page === scroll) {
+      //   smoothScrolling();
+      // }
+
+      onGetScroll();
+      onClickScroll();
 
       //  ------------------------Loadmore-----------------------
       // totalImg += hits.length;
