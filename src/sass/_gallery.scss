@@ -6,10 +6,10 @@ body {
   padding: 20px 0;
 }
 .gallery-container {
-  max-width: 1200px;
-
   padding: 0 15px;
   margin: 0 auto;
+
+  max-width: 1200px;
 }
 .gallery {
   display: flex;
@@ -59,4 +59,47 @@ img {
 
   flex-direction: column;
   align-items: center;
+}
+
+.scroll-up {
+  position: fixed;
+
+  z-index: 1000;
+
+  visibility: hidden;
+  opacity: 0;
+
+  bottom: 30px;
+  right: 30px;
+
+  width: 40px;
+  height: 40px;
+
+  background-color: transparent;
+
+  border-radius: 50%;
+  border: 1px solid #3030a3;
+
+  cursor: pointer;
+
+  transition: 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:focus,
+  &:hover {
+    border: 2px solid #3030a3;
+  }
+}
+
+.scroll-up--active {
+  visibility: visible;
+
+  opacity: 1;
+
+  transition: 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-icon {
+  fill: #3030a3;
 }

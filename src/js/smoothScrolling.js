@@ -1,7 +1,7 @@
-document.addEventListener('scroll', smoothScrolling);
-
 function smoothScrolling() {
-  console.log(document.querySelector('.gallery').firstElementChild);
+  //   console.log(
+  //     document.querySelector('.gallery').firstElementChild.getBoundingClientRect()
+  //   );
 
   const { height: cardHeight } = document
     .querySelector('.gallery')
